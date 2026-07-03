@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZPHS Malicherla | PM SHRI Model School</title>
+    <meta name="description" content="Official showcase portal of ZP High School, Malicherla. Empowering Young Minds Through Excellence, Innovation and Sustainable Education.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- DESIGN SYSTEM & CSS VARIABLES --- */
+        :root {
+            --primary: #0B5ED7;
+            --secondary: #198754;
+            --accent: #FFC107;
+            --dark: #0F172A;
+            --light: #F8FAFC;
+            --bg: #FFFFFF;
+            --text-main: #334155;
+            --text-muted: #64748B;
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(226, 232, 240, 0.8);
+            --glass-shadow: 0 10px 30px -5px rgba(11, 94, 215, 0.08);
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --font-sans: 'Inter', sans-serif;
+            --font-serif: 'Playfair Display', serif;
+        }
+
+        [data-theme="dark"] {
+            --bg: #090D16;
+            --dark: #F8FAFC;
+            --light: #1E293B;
+            --text-main: #E2E8F0;
+            --text-muted: #94A3B8;
+            --card-bg: rgba(30, 41, 59, 0.8);
+            --card-border: rgba(255, 255, 255, 0.08);
+            --glass-shadow: 0 10px 35px rgba(0, 0, 0, 0.4);
+        }
+
+        /* --- CSS RESET & BASE STYLES --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; scroll-behavior: smooth; }
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+            line-height: 1.6;
+        }
+        a { text-decoration: none; color: inherit; }
+        img { max-width: 100%; height: auto; display: block; }
+        ul { list-style: none; }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg); z-index: 9999; display: flex;
+            flex-direction: column; justify-content: center; align-items: center;
+        }
+        .spinner {
+            width: 60px; height: 60px; border: 5px solid var(--light);
+            border-top: 5px solid var(--primary); border-radius: 50%;
+            animation: spin 1s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* --- SCROLL PROGRESS & UTILITIES --- */
+        #scroll-progress {
+            position: fixed; top: 0; left: 0; height: 4px; background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 0%; z-index: 10000; transition: width 0.1s ease;
+        }
+        .container { width: 100%; max-width: 1240px; margin: 0 auto; padding: 0 24px; }
+        .section-padding { padding: 100px 0; }
+        .text-center { text-align: center; }
+        
+        .section-title {
+            font-family: var(--font-serif); font-size: 2.5rem; font-weight: 700;
+            color: var(--dark); margin-bottom: 16px; position: relative; display: inline-block;
+        }
+        .section-title::after {
+            content: ''; display: block; width: 60px; height: 4px; background: var(--primary);
+            margin: 12px auto 0 auto; border-radius: 2px;
+        }
+        .section-subtitle {
+            font-size: 1.1rem; color: var(--text-muted); max-width: 700px; margin: 0 auto 60px auto;
+        }
+
+        /* --- JAVASCRIPT AOS-STYLE ANIMATIONS --- */
+        .js-aos { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+        .js-aos.animated { opacity: 1; transform: translateY(0); }
+
+        /* --- NAVBAR --- */
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 999;
+            background: transparent; transition: var(--transition); padding: 20px 0;
+        }
+        header.sticky {
+            background: var(--bg); backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05); padding: 12px 0;
+        }
+        .nav-container { display: flex; align-items: center; justify-content: space-between; }
+        .logo-flex { display: flex; align-items: center; gap: 12px; }
+        .logo-icon {
+            width: 45px; height: 45px; background: var(--primary); color: white;
+            border-radius: 10px; display: flex; align-items: center; justify-content: center;
+            font-size: 1.5rem; font-weight: 800;
+        }
+        .brand-name { font-weight: 800; font-size: 1.4rem; letter-spacing: -0.5px; color: var(--dark); }
+        .brand-dept { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; font-weight: 600; letter-spacing: 1px; }
+        
+        .nav-menu { display: flex; gap: 24px; align-items: center; }
+        .nav-link {
+            font-size: 0.9rem; font-weight: 500; color: var(--text-main);
+            position: relative; padding: 6px 0; transition: var(--transition);
+        }
+        .nav-link:hover, .nav-link.active { color: var(--primary); }
+        .nav-link::after {
+            content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
+            background: var(--primary); transition: var(--transition);
+        }
+        .nav-link:hover::after, .nav-link.active::after { width: 100%; }
+        
+        .nav-actions { display: flex; align-items: center; gap: 16px; }
+        .theme-toggle {
+            background: var(--light); border: none; width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer; display: flex; align-items: center;
+            justify-content: center; color: var(--text-main); font-size: 1.1rem; transition: var(--transition);
+        }
+        .hamburger { display: none; cursor: pointer; flex-direction: column; gap: 6px; }
+        .hamburger span { width: 25px; height: 3px; background: var(--dark); transition: var(--transition); }
+
+        /* --- HERO SECTION --- */
+        #home {
+            height: 100vh; display: flex; align-items: center; position: relative;
+            background: linear-gradient(rgba(15, 23, 42, 0.75), rgba(15, 23, 42, 0.65)), url('https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=1920') center/cover no-repeat;
+            color: white; overflow: hidden; background-attachment: fixed;
+        }
+        .hero-content { max-width: 850px; position: relative; z-index: 2; padding-top: 60px; }
+        .hero-badge {
+            display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(5px); padding: 8px 16px; border-radius: 30px; font-size: 0.85rem;
+            text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2); color: var(--accent);
+        }
+        .hero-title { font-family: var(--font-serif); font-size: 4rem; font-weight: 700; line-height: 1.1; margin-bottom: 20px; }
+        .typing-container { height: 40px; font-size: 1.5rem; font-weight: 400; color: #E2E8F0; margin-bottom: 40px; }
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+        
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px; padding: 14px 28px;
+            border-radius: 8px; font-size: 0.95rem; font-weight: 600; cursor: pointer;
+            transition: var(--transition); border: none;
+        }
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-primary:hover { background: #0a54c2; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(11,94,215,0.3); }
+        .btn-secondary { background: var(--secondary); color: white; }
+        .btn-secondary:hover { background: #146c43; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(25,135,84,0.3); }
+        .btn-outline { background: transparent; color: white; border: 2px solid white; }
+        .btn-outline:hover { background: white; color: var(--dark); transform: translateY(-3px); }
+
+        /* --- GLASSMORPHISM CARD COMMON STYLE --- */
+        .glass-card {
+            background: var(--card-bg); border: 1px solid var(--card-border);
+            border-radius: 16px; backdrop-filter: blur(12px); padding: 32px;
+            box-shadow: var(--glass-shadow); transition: var(--transition);
+        }
+        .glass-card:hover { transform: translateY(-6px); box-shadow: 0 12px 40px rgba(11, 94, 215, 0.12); }
+
+        /* --- QUICK STATISTICS --- */
+        .stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; margin-top: -60px; position: relative; z-index: 10; }
+        .stat-card { text-align: center; padding: 30px; }
+        .stat-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 16px; }
+        .stat-number { font-size: 3rem; font-weight: 800; color: var(--dark); line-height: 1.2; }
+        .stat-label { font-size: 0.95rem; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 4px; }
+
+        /* --- ABOUT SCHOOL --- */
+        .about-wrapper { display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: start; }
+        .profile-container { display: flex; gap: 24px; background: var(--light); padding: 24px; border-radius: 16px; align-items: center; margin-bottom: 32px; }
+        .profile-info h4 { font-family: var(--font-serif); font-size: 1.4rem; color: var(--dark); }
+        .profile-info p { font-size: 0.9rem; color: var(--primary); font-weight: 600; }
+        
+        .grid-2x2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .info-mini-card { padding: 20px; text-align: center; }
+        .info-mini-card i { font-size: 1.8rem; color: var(--secondary); margin-bottom: 12px; }
+        .info-mini-card h5 { font-size: 1.5rem; color: var(--dark); margin-bottom: 4px; }
+        .info-mini-card p { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+
+        /* --- ACHIEVEMENTS TIMELINE & PROGRESS --- */
+        .timeline { position: relative; max-width: 800px; margin: 0 auto 60px auto; padding-left: 30px; border-left: 3px solid var(--light); }
+        .timeline-item { position: relative; margin-bottom: 40px; }
+        .timeline-item::before {
+            content: ''; position: absolute; left: -39px; top: 4px; width: 16px; height: 16px;
+            border-radius: 50%; background: var(--primary); border: 4px solid var(--bg); transition: var(--transition);
+        }
+        .timeline-year { font-weight: 800; color: var(--primary); font-size: 1.2rem; margin-bottom: 8px; display: inline-block; }
+        .progress-bar-container { background: var(--light); border-radius: 20px; height: 12px; overflow: hidden; margin-top: 10px; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 1.5s cubic-bezier(0.1, 1, 0.1, 1); }
+
+        .cards-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .achievement-card { display: flex; flex-direction: column; gap: 12px; }
+        .achiever-badge { align-self: flex-start; background: rgba(25, 135, 84, 0.1); color: var(--secondary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; }
+        .achievement-card h4 { font-size: 1.25rem; color: var(--dark); font-weight: 700; }
+        .achievement-card p { font-size: 0.9rem; color: var(--text-muted); }
+        .achiever-meta { margin-top: auto; padding-top: 12px; border-top: 1px solid var(--card-border); font-size: 0.85rem; font-weight: 600; color: var(--primary); }
+
+        /* --- PM SHRI GRANTS SECTION --- */
+        .grant-card { position: relative; overflow: hidden; border-top: 4px solid var(--primary); }
+        .grant-card::after { content: ''; position: absolute; top:0; right:0; width: 80px; height: 80px; background: rgba(11, 94, 215, 0.03); border-radius: 0 0 0 100%; }
+        .grant-amount { font-size: 2rem; font-weight: 800; color: var(--primary); margin: 16px 0 8px 0; }
+
+        /* --- INNOVATIONS & ENVIRONMENTAL EXCELLENCE --- */
+        .innovations-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        .innovation-item { display: flex; gap: 20px; }
+        .innovation-icon-box {
+            width: 50px; height: 50px; background: var(--light); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.4rem; color: var(--secondary); flex-shrink: 0;
+        }
+        .innovation-text h4 { font-size: 1.2rem; color: var(--dark); margin-bottom: 6px; }
+        .innovation-text p { font-size: 0.9rem; color: var(--text-muted); }
+
+        .env-banner {
+            background: linear-gradient(135deg, rgba(25, 135, 84, 0.1), rgba(11, 94, 215, 0.05));
+            border-radius: 24px; padding: 48px; margin-top: 60px; display: grid; grid-template-columns: 1fr 1.5fr; gap: 48px; align-items: center;
+        }
+        .env-award-badge { background: var(--accent); color: #000; padding: 12px 24px; border-radius: 12px; font-weight: 700; display: inline-flex; align-items: center; gap: 10px; font-size: 1.1rem; box-shadow: 0 4px 15px rgba(255,193,7,0.3); }
+        .env-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+        .env-list-item { display: flex; align-items: center; gap: 10px; font-weight: 500; font-size: 0.95rem; }
+        .env-list-item i { color: var(--secondary); }
+
+        /* --- INFRASTRUCTURE LIGHTBOX GALLERY --- */
+        .infra-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .infra-card { padding: 0; overflow: hidden; border-radius: 16px; cursor: pointer; }
+        .infra-img-wrapper { overflow: hidden; position: relative; height: 220px; background: #e2e8f0; }
+        .infra-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .infra-card:hover .infra-img-wrapper img { transform: scale(1.1); }
+        .infra-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: linear-gradient(transparent, rgba(0,0,0,0.7)); opacity: 0; transition: var(--transition); display: flex; align-items: flex-end; padding: 20px; }
+        .infra-card:hover .infra-overlay { opacity: 1; }
+        .infra-overlay span { color: white; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+        .infra-body { padding: 20px; }
+        .infra-body h4 { font-size: 1.15rem; color: var(--dark); margin-bottom: 4px; }
+        .infra-body p { font-size: 0.85rem; color: var(--text-muted); }
+
+        /* --- DYNAMIC GALLERY WITH FILTERS --- */
+        .filter-tabs { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 40px; }
+        .filter-btn {
+            background: var(--light); border: none; padding: 10px 20px; border-radius: 30px;
+            font-size: 0.9rem; font-weight: 600; cursor: pointer; color: var(--text-main); transition: var(--transition);
+        }
+        .filter-btn.active, .filter-btn:hover { background: var(--primary); color: white; }
+        
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .gallery-card { display: none; }
+        .gallery-card.show { display: block; animation: fadeIn 0.5s ease forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        
+        .gallery-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 16px; }
+        .gallery-photo-item { height: 120px; border-radius: 8px; overflow: hidden; cursor: pointer; position: relative; background: #e2e8f0; }
+        .gallery-photo-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .gallery-photo-item:hover img { transform: scale(1.08); }
+        .photo-overlay { position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; color: white; opacity: 0; transition: var(--transition); }
+        .gallery-photo-item:hover .photo-overlay { opacity: 1; }
+
+        /* --- VISUAL RESULTS GROWTH CHART --- */
+        .chart-container { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 24px; padding: 40px; box-shadow: var(--glass-shadow); max-width: 900px; margin: 0 auto; }
+        .visual-chart { display: flex; align-items: flex-end; justify-content: space-between; height: 300px; padding-top: 40px; position: relative; border-bottom: 2px solid var(--text-muted); }
+        .chart-bar-wrapper { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .chart-bar { width: 50px; background: linear-gradient(180deg, var(--primary), rgba(11,94,215,0.4)); border-radius: 8px 8px 0 0; height: 0; transition: height 1.5s cubic-bezier(0.1, 1, 0.1, 1); position: relative; }
+        .chart-bar-wrapper:last-child .chart-bar { background: linear-gradient(180deg, var(--secondary), rgba(25,135,84,0.4)); }
+        .chart-value { position: absolute; top: -30px; left: 50%; transform: translateX(-50%); font-weight: 800; color: var(--dark); }
+        .chart-label { margin-top: 16px; font-weight: 600; font-size: 0.9rem; color: var(--text-main); }
+
+        /* --- LIGHTBOX MODULE --- */
+        #lightbox {
+            position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(15,23,42,0.95);
+            z-index: 20000; display: none; align-items: center; justify-content: center; padding: 20px;
+        }
+        #lightbox-img { max-width: 90%; max-height: 80vh; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        #lightbox-caption { position: absolute; bottom: 40px; color: white; font-size: 1.2rem; font-weight: 500; text-align: center; }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: white; font-size: 2.5rem; cursor: pointer; transition: var(--transition); }
+        .lightbox-close:hover { color: var(--accent); }
+
+        /* --- FACULTY CARDS --- */
+        .faculty-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; }
+        .faculty-card { text-align: center; }
+        .faculty-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--light); margin: 0 auto 16px auto; display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--text-muted); border: 3px solid var(--card-border); }
+
+        /* --- TESTIMONIALS --- */
+        .testimonial-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+        .testi-card { position: relative; }
+        .quote-icon { font-size: 2.5rem; color: rgba(11, 94, 215, 0.1); position: absolute; top: 20px; left: 20px; }
+        .testi-text { font-style: italic; color: var(--text-main); font-size: 0.95rem; margin-bottom: 20px; z-index: 2; position: relative; }
+        .testi-user { display: flex; align-items: center; gap: 12px; }
+        .testi-avatar { width: 45px; height: 45px; border-radius: 50%; background: var(--light); display: flex; align-items: center; justify-content: center; font-weight: 700; color: var(--primary); }
+        .testi-meta h5 { font-size: 0.95rem; color: var(--dark); }
+        .testi-meta p { font-size: 0.8rem; color: var(--text-muted); }
+
+        /* --- CONTACT & FOOTER --- */
+        .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; }
+        .contact-info-list { display: flex; flex-direction: column; gap: 24px; }
+        .contact-item { display: flex; gap: 16px; }
+        .contact-icon { width: 45px; height: 45px; background: rgba(11,94,215,0.08); color: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; flex-shrink: 0; }
+        .contact-details h5 { font-size: 1rem; color: var(--dark); margin-bottom: 4px; }
+        .contact-details p { font-size: 0.9rem; color: var(--text-muted); }
+        
+        .contact-action-btns { display: flex; gap: 12px; margin-top: 30px; flex-wrap: wrap; }
+        .contact-action-btns .btn { padding: 10px 20px; font-size: 0.85rem; }
+        
+        .map-wrapper { height: 100%; min-height: 300px; background: var(--light); border-radius: 16px; overflow: hidden; position: relative; border: 1px solid var(--card-border); }
+        .map-placeholder { position: absolute; width: 100%; height:100%; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--text-muted); padding: 20px; text-align: center; }
+
+        footer { background: #0B132B; color: #8A99AD; padding: 60px 0 30px 0; font-size: 0.9rem; border-top: 4px solid var(--primary); }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr repeat(2, 1fr); gap: 48px; margin-bottom: 40px; }
+        .footer-logo h4 { color: white; font-family: var(--font-serif); font-size: 1.6rem; margin-bottom: 12px; }
+        .footer-links h5 { color: white; font-size: 1rem; margin-bottom: 16px; }
+        .footer-links ul { display: flex; flex-direction: column; gap: 10px; }
+        .footer-links a:hover { color: white; }
+        .footer-bottom { border-top: 1px solid rgba(255,255,255,0.05); padding-top: 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
+        .social-icons { display: flex; gap: 16px; }
+        .social-icon { width: 36px; height: 36px; background: rgba(255,255,255,0.05); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); }
+        .social-icon:hover { background: var(--primary); transform: translateY(-3px); }
+
+        /* --- FLOATING CONTROLS --- */
+        .floating-actions { position: fixed; bottom: 30px; right: 30px; display: flex; flex-direction: column; gap: 12px; z-index: 999; }
+        .float-btn { width: 50px; height: 50px; border-radius: 50%; color: white; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: var(--transition); cursor: pointer; border: none; }
+        .float-whatsapp { background: #25D366; }
+        .float-whatsapp:hover { transform: scale(1.1); background: #20ba5a; }
+        .float-call { background: var(--primary); }
+        .float-call:hover { transform: scale(1.1); background: #0a54c2; }
+        #back-to-top { background: var(--dark); color: var(--bg); display: none; transform: translateY(100px); opacity: 0; }
+        #back-to-top.visible { display: flex; animation: slideUp 0.3s ease forwards; }
+        @keyframes slideUp { to { transform: translateY(0); opacity: 1; } }
+
+        /* --- RESPONSIVE MEDIA QUERIES --- */
+        @media (max-width: 1024px) {
+            .hero-title { font-size: 3rem; }
+            .about-wrapper, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .env-banner { grid-template-columns: 1fr; gap: 24px; padding: 32px; }
+        }
+        @media (max-width: 768px) {
+            .hamburger { display: flex; }
+            .nav-menu {
+                position: fixed; top: 85px; left: -100%; width: 100%; height: calc(100vh - 85px);
+                background: var(--bg); flex-direction: column; padding: 40px 24px; gap: 24px;
+                align-items: flex-start; transition: var(--transition); box-shadow: 0 10px 20px rgba(0,0,0,0.05); overflow-y: auto;
+            }
+            .nav-menu.open { left: 0; }
+            header.sticky .nav-menu { top: 69px; height: calc(100vh - 69px); }
+            .hero-title { font-size: 2.3rem; }
+            .section-title { font-size: 2rem; }
+            .grid-2x2, .env-list { grid-template-columns: 1fr; }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="scroll-progress"></div>
+
+    <div id="preloader">
+        <div class="spinner"></div>
+        <h3 style="font-family: var(--font-serif); color: var(--dark);">ZPHS MALICHERLA</h3>
+        <p style="color: var(--text-muted); font-size: 0.85rem; letter-spacing: 1px; text-transform: uppercase;">Loading Showcase Portal...</p>
+    </div>
+
+    <header id="main-header">
+        <div class="container nav-container">
+            <a href="#home" class="logo-flex">
+                <div class="logo-icon">ZM</div>
+                <div>
+                    <div class="brand-name">ZPHS MALICHERLA</div>
+                    <div class="brand-dept">PM SHRI Model School</div>
+                </div>
+            </a>
+            <nav class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link active">Home</a>
+                <a href="#about" class="nav-link">About School</a>
+                <a href="#achievements" class="nav-link">Achievements</a>
+                <a href="#pmshri" class="nav-link">PM SHRI</a>
+                <a href="#innovations" class="nav-link">Innovations</a>
+                <a href="#infrastructure" class="nav-link">Infrastructure</a>
+                <a href="#gallery" class="nav-link">Gallery</a>
+                <a href="#faculty" class="nav-link">Faculty</a>
+                <a href="#results" class="nav-link">Results</a>
+                <a href="#contact" class="nav-link">Contact</a>
+            </nav>
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" title="Toggle Display Mode">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+                <div class="hamburger" id="hamburgerMenu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="home">
+        <div class="container hero-content">
+            <div class="hero-badge">
+                <i class="fa-solid fa-star"></i> Centrally Selected PM SHRI Model School (2022-23)
+            </div>
+            <h1 class="hero-title">ZPHS MALICHERLA</h1>
+            <div class="typing-container">
+                <span id="typed-text"></span><span class="cursor">|</span>
+            </div>
+            <div class="hero-btns">
+                <a href="#about" class="btn btn-primary">Explore School <i class="fa-solid fa-arrow-right"></i></a>
+                <a href="#achievements" class="btn btn-secondary">View Achievements <i class="fa-solid fa-trophy"></i></a>
+                <a href="javascript:void(0);" onclick="alert('Brochure download will begin once the official file is pinned by admin.')" class="btn btn-outline">Download Brochure <i class="fa-solid fa-download"></i></a>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="stats-grid">
+            <div class="glass-card stat-card js-aos">
+                <div class="stat-icon"><i class="fa-solid fa-calendar-days"></i></div>
+                <div class="stat-number" data-target="2005">0</div>
+                <div class="stat-label">Founded</div>
+            </div>
+            <div class="glass-card stat-card js-aos">
+                <div class="stat-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                <div class="stat-number" data-target="238">0</div>
+                <div class="stat-label">Students</div>
+            </div>
+            <div class="glass-card stat-card js-aos">
+                <div class="stat-icon"><i class="fa-solid fa-chalkboard-user"></i></div>
+                <div class="stat-number" data-target="20">0</div>
+                <div class="stat-label">Teachers+</div>
+            </div>
+            <div class="glass-card stat-card js-aos">
+                <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+                <div class="stat-number" data-target="2022">0</div>
+                <div class="stat-label">PM SHRI</div>
+            </div>
+            <div class="glass-card stat-card js-aos">
+                <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+                <div class="stat-number" data-target="83">0</div>
+                <div class="stat-label">SSC Pass %</div>
+            </div>
+        </div>
+    </div>
+
+    <section id="about" class="container section-padding">
+        <div class="text-center">
+            <h2 class="section-title js-aos">About Our Institution</h2>
+            <p class="section-subtitle js-aos">Established on February 1, 2005, ZP High School Malicherla provides a premium competitive environment and multi-disciplinary vocational educational tracks.</p>
+        </div>
+        <div class="about-wrapper">
+            <div class="glass-card js-aos">
+                <h3 style="font-family:var(--font-serif); font-size:1.6rem; color:var(--dark); margin-bottom:20px;">Institutional Leadership</h3>
+                <div class="profile-container">
+                    <div class="profile-avatar" style="width:100px; height:100px; border-radius:50%; background:var(--primary); color:white; display:flex; align-items:center; justify-content:center; font-size:2.5rem; font-weight:700; flex-shrink:0;">GS</div>
+                    <div class="profile-info">
+                        <h4>Smt. G. Sujatha <span style="font-size:0.9rem; font-weight:400; font-family:var(--font-sans); color:var(--text-muted);">M.A., B.Ed.</span></h4>
+                        <p>Head Mistress & Chief Administrator</p>
+                        <p style="font-size: 0.8rem; font-weight:400; color:var(--text-muted); margin-top:4px;">Recipient of District Best HM & Multi-Club Governance Honors.</p>
+                    </div>
+                </div>
+                <h4 style="margin-bottom:12px; color:var(--dark);">Staff Framework Matrix</h4>
+                <p style="font-size:0.95rem; color:var(--text-muted); margin-bottom:20px;">Supported by 20 domain specialists driving experiential, technology-enabled frameworks:</p>
+                <div class="grid-2x2">
+                    <div class="glass-card info-mini-card">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <h5>12</h5>
+                        <p>School Assistants</p>
+                    </div>
+                    <div class="glass-card info-mini-card">
+                        <i class="fa-solid fa-users"></i>
+                        <h5>4</h5>
+                        <p>Secondary Grade Teachers</p>
+                    </div>
+                    <div class="glass-card info-mini-card">
+                        <i class="fa-solid fa-user-gear"></i>
+                        <h5>2</h5>
+                        <p>Vocational Inst. (Agri/Health)</p>
+                    </div>
+                    <div class="glass-card info-mini-card">
+                        <i class="fa-solid fa-dumbbell"></i>
+                        <h5>2</h5>
+                        <p>PET / Art Instructors</p>
+                    </div>
+                </div>
+            </div>
+            <div class="glass-card js-aos" style="height: 100%;">
+                <h3 style="font-family:var(--font-serif); font-size:1.6rem; color:var(--dark); margin-bottom:24px;">Demographics & Strength</h3>
+                <p style="color:var(--text-muted); margin-bottom:30px;">Catering to Classes VI through X with balanced gender metrics, providing inclusive spaces for children with special needs (CWSN).</p>
+                
+                <div style="margin-bottom:24px;">
+                    <div style="display:flex; justify-content:between; font-weight:600; margin-bottom:8px;">
+                        <span>Total Enrollment (238 Students)</span>
+                        <span style="margin-left:auto; color:var(--primary);">100% Capacity</span>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-fill" style="width: 100%;"></div></div>
+                </div>
+                
+                <div style="margin-bottom:24px;">
+                    <div style="display:flex; justify-content:between; font-weight:600; margin-bottom:8px;">
+                        <span>Girls (126 Registered)</span>
+                        <span style="margin-left:auto; color:var(--secondary);">53% Ratio</span>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-fill" style="width: 53%; background: var(--secondary);"></div></div>
+                </div>
+
+                <div style="margin-bottom:40px;">
+                    <div style="display:flex; justify-content:between; font-weight:600; margin-bottom:8px;">
+                        <span>Boys (112 Registered)</span>
+                        <span style="margin-left:auto; color:var(--primary);">47% Ratio</span>
+                    </div>
+                    <div class="progress-bar-container"><div class="progress-fill" style="width: 47%;"></div></div>
+                </div>
+
+                <div style="background:var(--light); padding:20px; border-radius:12px; border-left:4px solid var(--accent);">
+                    <h5 style="color:var(--dark); margin-bottom:4px;"><i class="fa-solid fa-circle-info" style="color:var(--accent);"></i> Strategic Metric Note</h5>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">National flagship targets are thoroughly integrated across both foundational core classrooms and specialized application laboratories.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="container section-padding">
+        <div class="text-center">
+            <h2 class="section-title js-aos">Institutional Laurels</h2>
+            <p class="section-subtitle js-aos">Tracing the record-breaking trajectory of our structural updates, student performance metrics, and national standard achievements.</p>
+        </div>
+
+        <h3 style="text-align:center; font-family:var(--font-serif); margin-bottom:30px;" class="js-aos">SSC Historical Pass Percentage Arc</h3>
+        <div class="timeline js-aos">
+            <div class="timeline-item">
+                <span class="timeline-year">2021-22 Baseline</span>
+                <p style="font-weight:600; color:var(--dark)">39% Pass Outturn</p>
+                <div class="progress-bar-container"><div class="progress-fill" data-width="39%"></div></div>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2022-23 Initialization</span>
+                <p style="font-weight:600; color:var(--dark)">63% Pass Outturn</p>
+                <div class="progress-bar-container"><div class="progress-fill" data-width="63%"></div></div>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2023-24 Integration</span>
+                <p style="font-weight:600; color:var(--dark)">78% Pass Outturn</p>
+                <div class="progress-bar-container"><div class="progress-fill" data-width="78%"></div></div>
+            </div>
+            <div class="timeline-item">
+                <span class="timeline-year">2024-25 Modern Peak</span>
+                <p style="font-weight:600; color:var(--dark)">83% Pass Outturn</p>
+                <div class="progress-bar-container"><div class="progress-fill" data-width="83%"></div></div>
+            </div>
+        </div>
+
+        <h3 style="text-align:center; font-family:var(--font-serif); margin:60px 0 30px 0;" class="js-aos">Individual Excellence Roll</h3>
+        <div class="cards-grid">
+            <div class="glass-card achievement-card js-aos">
+                <span class="achiever-badge">National Academic</span>
+                <h4>Chandaka Lokesh</h4>
+                <p>Achieved a magnificent 98th percentile score (153/300 marks) in the highly competitive National JEE Mains Entrance Examination.</p>
+                <div class="achiever-meta"><i class="fa-solid fa-award"></i> 2023-24 Batch Scholar</div>
+            </div>
+            <div class="glass-card achievement-card js-aos">
+                <span class="achiever-badge">State First Prize</span>
+                <h4>Ambati Sai Vyshnavi</h4>
+                <p>Clinched the First Prize at the State Level Koushal Science Competitions for an exceptional, innovative Poster Presentation.</p>
+                <div class="achiever-meta"><i class="fa-solid fa-award"></i> Class VIII Scholar</div>
+            </div>
+            <div class="glass-card achievement-card js-aos">
+                <span class="achiever-badge">Civic Leadership</span>
+                <h4>Karrothu Danush</h4>
+                <p>Selected to represent the Vizianagaram constituency at the state-level Pathashala Saasana Sabha (Mock Parliament) in Vijayawada.</p>
+                <div class="achiever-meta"><i class="fa-solid fa-award"></i> Class X Representative</div>
+            </div>
+            <div class="glass-card achievement-card js-aos">
+                <span class="achiever-badge">State Athletics</span>
+                <h4>Boxing Championship Trio</h4>
+                <p>Won national recognition at the State Level Under-19 Boxing Championship: Karthu Paidiraju (Silver), Yogitha Mopada (Bronze), Korada Neelina (Bronze).</p>
+                <div class="achiever-meta"><i class="fa-solid fa-medal"></i> Under-19 State Team</div>
+            </div>
+            <div class="glass-card achievement-card js-aos">
+                <span class="achiever-badge">Inclusive Education</span>
+                <h4>Kadiyam Yamini</h4>
+                <p>Demonstrating unmatched artistic excellence, she won the First Prize at the District Level Drawing Competition for Children with Special Needs (CWSN).</p>
+                <div class="achiever-meta"><i class="fa-solid fa-palette"></i> Class VI Artist</div>
+            </div>
+            <div class="glass-card achievement-card js-aos">
+                <span class="achiever-badge">Faculty Honors</span>
+                <h4>Sri KOVSSNR Subramanyam</h4>
+                <p>Conferred the prestigious State Level Best Teacher Award for outstanding instruction in Physical Science and experimental learning frameworks.</p>
+                <div class="achiever-meta"><i class="fa-solid fa-star-of-life"></i> School Assistant (Phy. Science)</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="pmshri" style="background: var(--light);" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title js-aos">PM SHRI Fiscal Allocation</h2>
+                <p class="section-subtitle js-aos">Transparent view of central infrastructure development allocations perfectly utilized to establish global learning standards.</p>
+            </div>
+            <div class="cards-grid">
+                <div class="glass-card grant-card js-aos">
+                    <div style="font-size:2rem; color:var(--primary);"><i class="fa-solid fa-flask-vial"></i></div>
+                    <div class="grant-amount">₹15,58,000</div>
+                    <h4 style="color:var(--dark); margin-bottom:8px;">Chemistry Lab Upgrade</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">Fully funded modern lab infrastructure equipped with advanced instruments for real-world experiential science.</p>
+                </div>
+                <div class="glass-card grant-card js-aos" style="border-color: var(--secondary);">
+                    <div style="font-size:2rem; color:var(--secondary);"><i class="fa-solid fa-border-top-left"></i></div>
+                    <div class="grant-amount" style="color: var(--secondary);">₹5,00,000</div>
+                    <h4 style="color:var(--dark); margin-bottom:8px;">Play Field Construction</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">Utilized for extensive ground leveling, clearing, and setting up regulatory courts for Shuttle, Volleyball, Kabaddi, and Kho-Kho.</p>
+                </div>
+                <div class="glass-card grant-card js-aos" style="border-color: var(--accent);">
+                    <div style="font-size:2rem; color:var(--accent);"><i class="fa-solid fa-seedling"></i></div>
+                    <div class="grant-amount" style="color: var(--dark);">₹1,50,000</div>
+                    <h4 style="color:var(--dark); margin-bottom:8px;">Kitchen Garden Program</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">Allocated for organic agricultural patches, composting setups, and student-managed eco-farming pipelines.</p>
+                </div>
+                <div class="glass-card grant-card js-aos">
+                    <div style="font-size:2rem; color:var(--dark);"><i class="fa-solid fa-screwdriver-wrench"></i></div>
+                    <div class="grant-amount" style="color: var(--dark);">₹1,00,000</div>
+                    <h4 style="color:var(--dark); margin-bottom:8px;">Composite Utility Grant</h4>
+                    <p style="font-size:0.9rem; color:var(--text-muted);">Dedicated to clean drinking water modules, visual room enhancements, and persistent operational asset upkeep.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="innovations" class="container section-padding">
+        <div class="text-center">
+            <h2 class="section-title js-aos">Eco-Ecosystem & Pedagogical Innovations</h2>
+            <p class="section-subtitle js-aos">Bridging the gap between theory and practical life skills through advanced green initiatives and hands-on academic concepts.</p>
+        </div>
+        
+        <div class="innovations-grid">
+            <div class="glass-card innovation-item js-aos">
+                <div class="innovation-icon-box"><i class="fa-solid fa-bag-shopping"></i></div>
+                <div class="innovation-text">
+                    <h4>No Bag Day (Saturdays)</h4>
+                    <p>Textbook-free interactive Saturdays focused entirely on practical experimentation and vocational skill tracks.</p>
+                </div>
+            </div>
+            <div class="glass-card innovation-item js-aos">
+                <div class="innovation-icon-box"><i class="fa-solid fa-puzzle-piece"></i></div>
+                <div class="innovation-text">
+                    <h4>Low-Cost No-Cost TLM</h4>
+                    <p>Creating highly descriptive, student-made Teaching Learning Materials in Mathematics, English, and Hindi using recycled items.</p>
+                </div>
+            </div>
+            <div class="glass-card innovation-item js-aos">
+                <div class="innovation-icon-box"><i class="fa-solid fa-recycle"></i></div>
+                <div class="innovation-text">
+                    <h4>Plastic Upcycling Drive</h4>
+                    <p>Repurposing discarded chemical cans into hand-painted structural flower pots, and transforming 25kg mid-day meal rice sacks into vegetable grow bags.</p>
+                </div>
+            </div>
+            <div class="glass-card innovation-item js-aos">
+                <div class="innovation-icon-box"><i class="fa-solid fa-leaf"></i></div>
+                <div class="innovation-text">
+                    <h4>Organic Composting Patch</h4>
+                    <p>Recycling 100% of organic mid-day meal kitchen wet waste directly into nutritious vermicompost fertilizer beds.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="env-banner js-aos">
+            <div>
+                <span class="env-award-badge"><i class="fa-solid fa-medal"></i> State Rank Honor</span>
+                <h3 style="font-family: var(--font-serif); font-size: 2.2rem; margin-top: 16px; color: var(--dark);">Swachch Evam Haritha Vidyalaya Puraskar</h3>
+                <p style="margin-top: 12px; color: var(--text-main);">Awarded by the state administration for establishing unprecedented milestones in green campus management, absolute cleanliness, and organic campus cultivation.</p>
+            </div>
+            <div class="env-list">
+                <div class="env-list-item"><i class="fa-solid fa-square-check"></i> Pure Organic Farm-to-Kitchen Yield</div>
+                <div class="env-list-item"><i class="fa-solid fa-square-check"></i> Sustainable Rainwater Harvesting Grid</div>
+                <div class="env-list-item"><i class="fa-solid fa-square-check"></i> Micro-Waste Vermicompost Module</div>
+                <div class="env-list-item"><i class="fa-solid fa-square-check"></i> Eco-Club Student Advisory Leadership</div>
+                <div class="env-list-item"><i class="fa-solid fa-square-check"></i> Zero-Plastic Litter Enforcement Zone</div>
+                <div class="env-list-item"><i class="fa-solid fa-square-check"></i> Completely Energy-Efficient Campus Grid</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="infrastructure" style="background: var(--light);" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title js-aos">Advanced Assets & Infrastructure</h2>
+                <p class="section-subtitle js-aos">Explore our technology-enabled environments designed for premium, comprehensive student advancement.</p>
+            </div>
+            <div class="infra-grid">
+                <div class="glass-card infra-card js-aos" onclick="openLightbox('https://images.unsplash.com/photo-1532187863486-abf9d39d6618?auto=format&fit=crop&q=80&w=800', 'Advanced PM SHRI Chemistry Laboratory')">
+                    <div class="infra-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1532187863486-abf9d39d6618?auto=format&fit=crop&q=80&w=800" alt="Chemistry Lab">
+                        <div class="infra-overlay"><span><i class="fa-solid fa-expand"></i> View Lab Suite</span></div>
+                    </div>
+                    <div class="infra-body">
+                        <h4>Chemistry Laboratory</h4>
+                        <p>Fully upgraded modern scientific test benches funded under the PM SHRI scheme.</p>
+                    </div>
+                </div>
+                <div class="glass-card infra-card js-aos" onclick="openLightbox('https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=800', 'Smart ICT Enablement Center')">
+                    <div class="infra-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&q=80&w=800" alt="Digital Classroom">
+                        <div class="infra-overlay"><span><i class="fa-solid fa-expand"></i> Launch Smart View</span></div>
+                    </div>
+                    <div class="infra-body">
+                        <h4>Digital Smart Classroom</h4>
+                        <p>Equipped with modern ICT tools, high-speed connectivity, and audio-visual assets.</p>
+                    </div>
+                </div>
+                <div class="glass-card infra-card js-aos" onclick="openLightbox('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800', 'Central Knowledge Repository & Reading Hall')">
+                    <div class="infra-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1521587760476-6c12a4b040da?auto=format&fit=crop&q=80&w=800" alt="Library">
+                        <div class="infra-overlay"><span><i class="fa-solid fa-expand"></i> Browse Catalog</span></div>
+                    </div>
+                    <div class="infra-body">
+                        <h4>Centralized Library</h4>
+                        <p>Houses extensive volumes of academic titles, reference journals, and multi-lingual digital media.</p>
+                    </div>
+                </div>
+                <div class="glass-card infra-card js-aos" onclick="openLightbox('https://images.unsplash.com/photo-1508847154043-be12a981c69e?auto=format&fit=crop&q=80&w=800', 'Integrated Multi-Court Sports Ground')">
+                    <div class="infra-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1508847154043-be12a981c69e?auto=format&fit=crop&q=80&w=800" alt="Sports Field">
+                        <div class="infra-overlay"><span><i class="fa-solid fa-expand"></i> Open Ground Plan</span></div>
+                    </div>
+                    <div class="infra-body">
+                        <h4>Regulatory Play Field</h4>
+                        <p>Leveled courts for Shuttle, Kabaddi, Kho-Kho, Volleyball, and combat sports training.</p>
+                    </div>
+                </div>
+                <div class="glass-card infra-card js-aos" onclick="openLightbox('https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=800', 'Student-Led Eco-Patches & Kitchen Garden')">
+                    <div class="infra-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1466692476868-aef1dfb1e735?auto=format&fit=crop&q=80&w=800" alt="Kitchen Garden">
+                        <div class="infra-overlay"><span><i class="fa-solid fa-expand"></i> Inspect Farm Patch</span></div>
+                    </div>
+                    <div class="infra-body">
+                        <h4>Organic Kitchen Garden</h4>
+                        <p>A sustainable green patch providing direct organic produce to the daily mid-day meals.</p>
+                    </div>
+                </div>
+                <div class="glass-card infra-card js-aos" onclick="openLightbox('https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800', 'Specialized Agricultural & Healthcare Training Labs')">
+                    <div class="infra-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=800" alt="Vocational Labs">
+                        <div class="infra-overlay"><span><i class="fa-solid fa-expand"></i> Open Training Labs</span></div>
+                    </div>
+                    <div class="infra-body">
+                        <h4>Vocational Laboratories</h4>
+                        <p>Hands-on operational training benches for specialized agriculture and healthcare tracks.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="gallery" class="container section-padding">
+        <div class="text-center">
+            <h2 class="section-title js-aos">Official Activity Gallery</h2>
+            <p class="section-subtitle js-aos">Fully filterable media record of school events. Each card includes exactly two structured photo references.</p>
+        </div>
+
+        <div class="filter-tabs js-aos">
+            <button class="filter-btn active" onclick="filterGallery('all')">All Activities</button>
+            <button class="filter-btn" onclick="filterGallery('achievements')">Achievements</button>
+            <button class="filter-btn" onclick="filterGallery('sports')">Sports</button>
+            <button class="filter-btn" onclick="filterGallery('pmshri')">PM SHRI</button>
+            <button class="filter-btn" onclick="filterGallery('innovations')">Innovations</button>
+            <button class="filter-btn" onclick="filterGallery('environment')">Environment</button>
+            <button class="filter-btn" onclick="filterGallery('events')">Events</button>
+        </div>
+
+        <div class="gallery-grid">
+            <div class="glass-card gallery-card show js-aos" data-category="achievements">
+                <h4 style="color:var(--dark);">National JEE Milestone</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Celebrating Chandaka Lokesh's pathbreaking success in national entrance benchmarks.</p>
+                <div class="gallery-photos">
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=500', 'JEE Milestone - Felicitations')">
+                        <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&q=80&w=500" alt="activity1_photo1.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=500', 'JEE Milestone - Campus Celebration')">
+                        <img src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=500" alt="activity1_photo2.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card gallery-card show js-aos" data-category="sports">
+                <h4 style="color:var(--dark);">State Boxing Arena</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Our student-boxers winning silver and bronze laurels at the state combat matches.</p>
+                <div class="gallery-photos">
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1509563268479-0f004cf3f58b?auto=format&fit=crop&q=80&w=500', 'Boxing Event - Ring Presentation')">
+                        <img src="https://images.unsplash.com/photo-1509563268479-0f004cf3f58b?auto=format&fit=crop&q=80&w=500" alt="activity2_photo1.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=500', 'Boxing Event - Award Ceremony')">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&q=80&w=500" alt="activity2_photo2.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card gallery-card show js-aos" data-category="pmshri">
+                <h4 style="color:var(--dark);">PM SHRI Lab Dedication</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Inauguration and initial structural review of our specialized Chemistry facility.</p>
+                <div class="gallery-photos">
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=500', 'PM SHRI Lab - Ribbon Cutting')">
+                        <img src="https://images.unsplash.com/photo-1576086213369-97a306d36557?auto=format&fit=crop&q=80&w=500" alt="activity3_photo1.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=500', 'PM SHRI Lab - First Experiment Batch')">
+                        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=500" alt="activity3_photo2.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card gallery-card show js-aos" data-category="innovations">
+                <h4 style="color:var(--dark);">No Bag Day TLM Crafting</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Students actively building mathematics models and multilingual structural charts.</p>
+                <div class="gallery-photos">
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=500', 'TLM Crafting - Student Teams')">
+                        <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=500" alt="activity4_photo1.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=500', 'TLM Crafting - Final Exhibition')">
+                        <img src="https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?auto=format&fit=crop&q=80&w=500" alt="activity4_photo2.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card gallery-card show js-aos" data-category="environment">
+                <h4 style="color:var(--dark);">Haritha Green Plantation</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">Expanding the organic patches with sustainable, student-managed grow bags.</p>
+                <div class="gallery-photos">
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&q=80&w=500', 'Green Plantation - Planting Saplings')">
+                        <img src="https://images.unsplash.com/photo-1592417817098-8f3d6eb19675?auto=format&fit=crop&q=80&w=500" alt="activity5_photo1.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=500', 'Green Plantation - Vermicompost Setup')">
+                        <img src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=500" alt="activity5_photo2.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card gallery-card show js-aos" data-category="events">
+                <h4 style="color:var(--dark);">Guinness World Record Gathering</h4>
+                <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:12px;">The historic Mega Parents Assembly organized under Andhra Pradesh state initiative.</p>
+                <div class="gallery-photos">
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=500', 'Mega Meeting - Parent Attendance')">
+                        <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&q=80&w=500" alt="activity6_photo1.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                    <div class="gallery-photo-item" onclick="openLightbox('https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=500', 'Mega Meeting - Certificate Showcase')">
+                        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&q=80&w=500" alt="activity6_photo2.jpg">
+                        <div class="photo-overlay"><i class="fa-solid fa-eye"></i></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="lightbox">
+        <span class="lightbox-close" onclick="closeLightbox()">×</span>
+        <img id="lightbox-img" src="" alt="Enlarged View">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <section id="results" style="background: var(--light);" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title js-aos">Performance Metrics Arc</h2>
+                <p class="section-subtitle js-aos">A visual breakdown of the dramatic increase in our multi-year SSC Board pass outcomes.</p>
+            </div>
+            
+            <div class="chart-container js-aos">
+                <div class="visual-chart" id="academicChart">
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" data-height="39%">
+                            <span class="chart-value">39%</span>
+                        </div>
+                        <span class="chart-label">2021-22</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" data-height="63%">
+                            <span class="chart-value">63%</span>
+                        </div>
+                        <span class="chart-label">2022-23</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" data-height="78%">
+                            <span class="chart-value">78%</span>
+                        </div>
+                        <span class="chart-label">2023-24</span>
+                    </div>
+                    <div class="chart-bar-wrapper">
+                        <div class="chart-bar" data-height="83%">
+                            <span class="chart-value">83%</span>
+                        </div>
+                        <span class="chart-label">2024-25</span>
+                    </div>
+                </div>
+                <p style="text-align:center; margin-top:30px; font-size:0.9rem; color:var(--text-muted); font-weight:500;">
+                    <i class="fa-solid fa-circle-arrow-up" style="color:var(--secondary)"></i> Net Growth of +44% recorded post PM SHRI model school selection.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="faculty" class="container section-padding">
+        <div class="text-center">
+            <h2 class="section-title js-aos">Our Expert Educators</h2>
+            <p class="section-subtitle js-aos">The core administrative and teaching framework driving our student accolades.</p>
+        </div>
+        <div class="faculty-grid">
+            <div class="glass-card faculty-card js-aos">
+                <div class="faculty-avatar"><i class="fa-solid fa-user-tie"></i></div>
+                <h4 style="color:var(--dark);">Smt. G. Sujatha</h4>
+                <p style="font-size:0.85rem; color:var(--primary); font-weight:600; margin-bottom:8px;">Head Mistress</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Chief institutional planner coordinating overall central parameters and curriculum integrations.</p>
+            </div>
+            <div class="glass-card faculty-card js-aos">
+                <div class="faculty-avatar"><i class="fa-solid fa-user-graduate"></i></div>
+                <h4 style="color:var(--dark);">Sri Subramanyam</h4>
+                <p style="font-size:0.85rem; color:var(--primary); font-weight:600; margin-bottom:8px;">School Assistant</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">State-Awarded expert driving physical science labs and advanced conceptual research projects.</p>
+            </div>
+            <div class="glass-card faculty-card js-aos">
+                <div class="faculty-avatar"><i class="fa-solid fa-tractor"></i></div>
+                <h4 style="color:var(--dark);">Agri-Domain Instructor</h4>
+                <p style="font-size:0.85rem; color:var(--primary); font-weight:600; margin-bottom:8px;">Vocational Specialist</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Directing student farm micro-management, grow-bag scaling, and sustainable cultivation.</p>
+            </div>
+            <div class="glass-card faculty-card js-aos">
+                <div class="faculty-avatar"><i class="fa-solid fa-user-nurse"></i></div>
+                <h4 style="color:var(--dark);">Healthcare Instructor</h4>
+                <p style="font-size:0.85rem; color:var(--primary); font-weight:600; margin-bottom:8px;">Vocational Specialist</p>
+                <p style="font-size:0.85rem; color:var(--text-muted);">Managing healthcare training suites, community first-aid metrics, and medical tracking lines.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonials" style="background:var(--light);" class="section-padding">
+        <div class="container">
+            <div class="text-center">
+                <h2 class="section-title js-aos">Stakeholder Evaluations</h2>
+                <p class="section-subtitle js-aos">Hear from the administrators, parents, and evaluation teams tracking our institutional journey.</p>
+            </div>
+            <div class="testimonial-grid">
+                <div class="glass-card testi-card js-aos">
+                    <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testi-text">"The practical utilization of the chemistry lab and organic farming modules sets ZPHS Malicherla apart as a benchmark PM SHRI model school in the region."</p>
+                    <div class="testi-user">
+                        <div class="testi-avatar">DE</div>
+                        <div class="testi-meta">
+                            <h5>Education Official</h5>
+                            <p>District Evaluation Board</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card testi-card js-aos">
+                    <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testi-text">"My child's conceptual understanding improved massively through the No Bag Day projects. The focus on individual excellence is highly encouraging."</p>
+                    <div class="testi-user">
+                        <div class="testi-avatar">PM</div>
+                        <div class="testi-meta">
+                            <h5>M. Appala Naidu</h5>
+                            <p>School Management Committee Parent</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="glass-card testi-card js-aos">
+                    <div class="quote-icon"><i class="fa-solid fa-quote-left"></i></div>
+                    <p class="testi-text">"Representing our school at the State Mock Assembly gave me immense confidence. Our teachers support us in both sports and national entrance exams."</p>
+                    <div class="testi-user">
+                        <div class="testi-avatar">ST</div>
+                        <div class="testi-meta">
+                            <h5>Class X Student</h5>
+                            <p>Student Advisory Lead</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="container section-padding">
+        <div class="text-center">
+            <h2 class="section-title js-aos">Connect With Us</h2>
+            <p class="section-subtitle js-aos">Reach out for institutional evaluation visits, enrollments, or general educational inquiries.</p>
+        </div>
+        <div class="contact-grid">
+            <div class="glass-card js-aos">
+                <h3 style="font-family:var(--font-serif); font-size:1.5rem; margin-bottom:24px; color:var(--dark);">Contact Information</h3>
+                <div class="contact-info-list">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <div class="contact-details">
+                            <h5>School Address</h5>
+                            <p>Zilla Parishad High School, Malicherla, Pusapatirega Mandal, Vizianagaram District, Andhra Pradesh, India.</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div class="contact-details">
+                            <h5>Official Portal Mail</h5>
+                            <p>zphsmali04@gmail.com</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-clock"></i></div>
+                        <div class="contact-details">
+                            <h5>Working Campus Hours</h5>
+                            <p>Monday – Saturday: 09:00 AM – 04:30 PM IST</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-action-btns">
+                    <a href="tel:+910000000000" class="btn btn-primary"><i class="fa-solid fa-phone"></i> Call Administration</a>
+                    <a href="mailto:zphsmali04@gmail.com" class="btn btn-secondary"><i class="fa-solid fa-envelope"></i> Send Email</a>
+                </div>
+            </div>
+            <div class="glass-card js-aos" style="padding:0; overflow:hidden;">
+                <div class="map-wrapper">
+                    <div class="map-placeholder">
+                        <i class="fa-solid fa-map-location-dot" style="font-size:3.5rem; color:var(--primary); margin-bottom:16px;"></i>
+                        <h4 style="color:var(--dark);">Geospatial Map Engine Placeholder</h4>
+                        <p style="font-size:0.85rem; max-width:340px; margin-bottom:20px;">DISE Code Reference: 2812 2802 104. Click below to map accurate satellite directions directly via Google Maps.</p>
+                        <a href="https://maps.google.com" target="_blank" class="btn btn-primary"><i class="fa-solid fa-location-arrow"></i> Get Navigation Directions</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-logo">
+                <h4>ZPHS MALICHERLA</h4>
+                <p style="font-size:0.85rem; line-height:1.6; margin-top:10px;">"Empowering Young Minds Through Excellence, Innovation and Sustainable Education." Centrally chosen flagship model school implementing National Education Policy standards.</p>
+            </div>
+            <div class="footer-links">
+                <h5>Navigation Links</h5>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About School</a></li>
+                    <li><a href="#achievements">Achievements Portfolio</a></li>
+                    <li><a href="#pmshri">PM SHRI Assets</a></li>
+                    <li><a href="#innovations">Ecosystem Innovations</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h5>External Matrix</h5>
+                <ul>
+                    <li><a href="#infrastructure">Infrastructure Gallery</a></li>
+                    <li><a href="#results">Academic Performance Arc</a></li>
+                    <li><a href="#faculty">Expert Faculty Matrix</a></li>
+                    <li><a href="#contact">Contact Gateway</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <div>
+                © 2026 ZPHS Malicherla. All Rights Reserved. | DISE Code: 2812 2802 104
+            </div>
+            <div style="display:flex; align-items:center; gap:20px;">
+                <div class="social-icons">
+                    <a href="#" class="social-icon" aria-label="Facebook Connect"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" class="social-icon" aria-label="Twitter Connect"><i class="fa-brands fa-twitter"></i></a>
+                    <a href="#" class="social-icon" aria-label="YouTube Channel"><i class="fa-brands fa-youtube"></i></a>
+                </div>
+                <div style="font-size:0.8rem; font-weight:500;">
+                    Developed by <span style="color:white; font-weight:700;">PM SHRI Tech Team</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div class="floating-actions">
+        <a href="https://wa.me/#" target="_blank" class="float-btn float-whatsapp" title="WhatsApp Advisory Hub" aria-label="WhatsApp Link"><i class="fa-brands fa-whatsapp"></i></a>
+        <a href="tel:+910000000000" class="float-btn float-call" title="Call Administrative Desk" aria-label="Call Office Phone"><i class="fa-solid fa-phone"></i></a>
+        <button id="back-to-top" class="float-btn" title="Scroll To Top Header" aria-label="Scroll to top"><i class="fa-solid fa-arrow-up"></i></button>
+    </div>
+
+    <script>
+        // --- PRELOADER REMOVAL ENGINE ---
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            setTimeout(() => {
+                preloader.style.opacity = '0';
+                preloader.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => preloader.style.display = 'none', 500);
+                startTypingAnimation();
+                initAosEngine();
+            }, 600);
+        });
+
+        // --- DARK MODE THEME HANDLER ---
+        const themeToggle = document.getElementById('themeToggle');
+        const icon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            if (document.documentElement.getAttribute('data-theme') === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                icon.className = 'fa-solid fa-moon';
+                localStorage.setItem('theme', 'light');
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                icon.className = 'fa-solid fa-sun';
+                localStorage.setItem('theme', 'dark');
+            }
+        });
+        
+        if (localStorage.getItem('theme') === 'dark') {
+            document.documentElement.setAttribute('data-theme', 'dark');
+            icon.className = 'fa-solid fa-sun';
+        }
+
+        // --- HAMBURGER MENU FLYOUT ---
+        const hamburger = document.getElementById('hamburgerMenu');
+        const navMenu = document.getElementById('navMenu');
+        
+        hamburger.addEventListener('click', () => {
+            navMenu.classList.toggle('open');
+            const spans = hamburger.querySelectorAll('span');
+            spans[0].style.transform = navMenu.classList.contains('open') ? 'rotate(45deg) translate(6px, 6px)' : 'none';
+            spans[1].style.opacity = navMenu.classList.contains('open') ? '0' : '1';
+            spans[2].style.transform = navMenu.classList.contains('open') ? 'rotate(-45deg) translate(6px, -6px)' : 'none';
+        });
+
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('open');
+                document.querySelectorAll('span').forEach(s => s.style.transform = 'none');
+                document.querySelectorAll('span')[1].style.opacity = '1';
+            });
+        });
+
+        // --- TYPING INSCRIPTION TRACKER ---
+        const phrases = [
+            "Empowering Young Minds Through Excellence.",
+            "Innovation and Sustainable Education.",
+            "Nurturing 21st Century Foundational Skills."
+        ];
+        let phraseIdx = 0, letterIdx = 0, currentTxt = '', isDeleting = false;
+        
+        function startTypingAnimation() {
+            const targetSpan = document.getElementById('typed-text');
+            if (!targetSpan) return;
+            
+            if (isDeleting) {
+                currentTxt = phrases[phraseIdx].substring(0, letterIdx - 1);
+                letterIdx--;
+            } else {
+                currentTxt = phrases[phraseIdx].substring(0, letterIdx + 1);
+                letterIdx++;
+            }
+            
+            targetSpan.textContent = currentTxt;
+            let typeSpeed = isDeleting ? 30 : 60;
+            
+            if (!isDeleting && letterIdx === phrases[phraseIdx].length) {
+                typeSpeed = 2500; 
+                isDeleting = true;
+            } else if (isDeleting && letterIdx === 0) {
+                isDeleting = false;
+                phraseIdx = (phraseIdx + 1) % phrases.length;
+                typeSpeed = 500;
+            }
+            
+            setTimeout(startTypingAnimation, typeSpeed);
+        }
+
+        // --- INTERSECTION OBSERVER ANIMATION GATEWAY (AOS TYPE) ---
+        function initAosEngine() {
+            const aosElements = document.querySelectorAll('.js-aos');
+            const countElements = document.querySelectorAll('.stat-number');
+            const progressBars = document.querySelectorAll('.timeline .progress-fill');
+            const chartBars = document.querySelectorAll('.chart-bar');
+
+            const scrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animated');
+                        
+                        if (entry.target.classList.contains('stat-number')) {
+                            triggerCounter(entry.target);
+                        }
+                        if (entry.target.parentElement.classList.contains('timeline-item')) {
+                            entry.target.style.width = entry.target.getAttribute('data-width');
+                        }
+                        if (entry.target.classList.contains('chart-bar')) {
+                            entry.target.style.height = entry.target.getAttribute('data-height');
+                        }
+                        scrollObserver.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            aosElements.forEach(el => scrollObserver.observe(el));
+            countElements.forEach(el => scrollObserver.observe(el));
+            progressBars.forEach(el => scrollObserver.observe(el));
+            chartBars.forEach(el => scrollObserver.observe(el));
+        }
+
+        // --- COUNTER INCREMENT LOGIC ---
+        function triggerCounter(el) {
+            const target = +el.getAttribute('data-target');
+            const duration = 1800; 
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCount = () => {
+                current += increment;
+                if (current < target) {
+                    el.textContent = Math.ceil(current) + (target === 83 ? '%' : '');
+                    setTimeout(updateCount, 16);
+                } else {
+                    el.textContent = target + (target === 83 ? '%' : '');
+                }
+            };
+            updateCount();
+        }
+
+        // --- SCROLL PROGRESS & ACTIVE TIMELINE HIGHLIGHTER ---
+        const headerRef = document.getElementById('main-header');
+        const bttBtn = document.getElementById('back-to-top');
+        const progressFillRef = document.getElementById('scroll-progress');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const sections = document.querySelectorAll('section');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            
+            if (docHeight > 0) {
+                progressFillRef.style.width = `${(scrollPos / docHeight) * 100}%`;
+            }
+
+            if (scrollPos > 60) {
+                headerRef.classList.add('sticky');
+            } else {
+                headerRef.classList.remove('sticky');
+            }
+
+            if (scrollPos > 500) {
+                bttBtn.classList.add('visible');
+            } else {
+                bttBtn.classList.remove('visible');
+            }
+
+            let currentActiveSectionId = '';
+            sections.forEach(sec => {
+                const top = sec.offsetTop - 120;
+                const height = sec.offsetHeight;
+                if (scrollPos >= top && scrollPos < top + height) {
+                    currentActiveSectionId = sec.getAttribute('id');
+                }
+            });
+
+            if (currentActiveSectionId) {
+                navLinks.forEach(link => {
+                    link.classList.remove('active');
+                    if (link.getAttribute('href') === `#${currentActiveSectionId}`) {
+                        link.classList.add('active');
+                    }
+                });
+            }
+        });
+
+        bttBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // --- IMAGE LIGHTBOX MODULE ---
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxCap = document.getElementById('lightbox-caption');
+
+        function openLightbox(src, captionText) {
+            lightboxImg.src = src;
+            lightboxCap.textContent = captionText;
+            lightbox.style.display = 'flex';
+            document.body.style.overflow = 'hidden'; 
+        }
+
+        function closeLightbox() {
+            lightbox.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+        
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) closeLightbox();
+        });
+
+        // --- REAL-TIME GALLERY SORT FILTER ---
+        function filterGallery(category) {
+            const cards = document.querySelectorAll('.gallery-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+
+            cards.forEach(card => {
+                if (category === 'all' || card.getAttribute('data-category') === category) {
+                    card.classList.add('show');
+                } else {
+                    card.classList.remove('show');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
